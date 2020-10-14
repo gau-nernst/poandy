@@ -5,9 +5,12 @@ from poandy.util.utils import Utils
 import pandas as pd
 from dateutil.parser import isoparse
 
+
 class InstrumentController(Controller):
     @classmethod
-    def get_historical(cls, instrument_name, start="2000-01-01 00:00:00", end="2020-10-01 00:00:00"):
+    def get_historical(
+        cls, instrument_name, start="2000-01-01 00:00:00", end="2020-10-01 00:00:00"
+    ):
         # wrapper around get_candles, bypass the 5000 count limit
         start_timestamp = Utils.get_unix_timestamp(start)
         end_timestamp = Utils.get_unix_timestamp(end)
@@ -17,9 +20,13 @@ class InstrumentController(Controller):
         full_candles = []
         while True:
             try:
-                candles = cls.get_candles(instrument_name, candle_params={"from": start_timestamp})
+                candles = cls.get_candles(
+                    instrument_name, candle_params={"from": start_timestamp}
+                )
                 if candles.iloc[-1]["unixtime"] >= end_timestamp:
-                    full_candles.append(candles.loc[candles["unixtime"] <= end_timestamp])
+                    full_candles.append(
+                        candles.loc[candles["unixtime"] <= end_timestamp]
+                    )
                     break
                 else:
                     full_candles.append(candles)
@@ -54,7 +61,11 @@ class InstrumentController(Controller):
             candles["candles"]["time"] = pd.to_datetime(
                 candles["candles"]["time"], unit="s"
             )
-            candles["candles"]["unixtime"] = candles["candles"]["time"].astype(str).apply(lambda x: int(Utils.get_unix_timestamp(x)))
+            candles["candles"]["unixtime"] = (
+                candles["candles"]["time"]
+                .astype(str)
+                .apply(lambda x: int(Utils.get_unix_timestamp(x)))
+            )
             for price in ["mid", "bid", "ask"]:
                 if price not in candles["candles"].columns:
                     continue
