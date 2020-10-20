@@ -27,6 +27,11 @@ Simple Python wrapper for Oanda (https://developer.oanda.com/rest-live-v20/intro
    conda deactivate
    ```
 
+3. (IMPORTANT FOR DEV) You need to create a secret for CI to work.
+    - In your fork, go to settings -> Secrets -> New secret
+    - Name it "SECRETS_BASE64_FILE"
+    - Go to https://base64.guru/converter/encode/file, upload your secrets.json, convert into Base64, then use it as the value for "SECRETS_BASE64_FILE"
+
 ## Linter
 
 Use flake8 without line length limit. If using vscode, include the following in settings.json.
