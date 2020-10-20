@@ -54,6 +54,7 @@ If using vscode, include the following settings in your settings.json file.
 
 Vscode should now automatically format your code based on Black style guide whenever you hit save.
 
+
 ## Test
 
     pytest
