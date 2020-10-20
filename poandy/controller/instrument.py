@@ -6,7 +6,6 @@ import pandas as pd
 from dateutil.parser import isoparse
 
 
-
 class InstrumentController(Controller):
     @classmethod
     def get_historical(
